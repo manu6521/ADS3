@@ -122,7 +122,7 @@ plt.plot(pred_year,pred_ind,label="prediction")
 plt.legend()
 plt.show()
 """
-CLUSTERING ind vs colombia
+clustering india vs colombia
 """
 
 dt = dt.iloc[:,1:3]
@@ -139,16 +139,20 @@ for s in range(2):
     plt.plot(xc,yc,"dk",markersize=13)
 plt.figure()
 plt.show()
+def clustering(dt):
+    """
+    clustering solid vs liquid(india)
+    """
+    india = pd.DataFrame()
+    india["co2_liquid"] = dt["INDIA"]
+    india["co2_solid"] = sdt["INDIA"]
+    kmean = cluster.KMeans(n_clusters=2).fit(india)
+    label = kmean.labels_
+    plt.scatter(india["co2_liquid"],india["co2_solid"],c=label,cmap="jet")
+    plt.title("CO2_LIQUID VS CO2_SOLID(INDIA)")
 """
-clustering solid vs liquid(india)
+finding centroids
 """
-india = pd.DataFrame()
-india["co2_liquid"] = dt["INDIA"]
-india["co2_solid"] = sdt["INDIA"]
-kmean = cluster.KMeans(n_clusters=2).fit(india)
-label = kmean.labels_
-plt.scatter(india["co2_liquid"],india["co2_solid"],c=label,cmap="jet")
-plt.title("CO2_LIQUID VS CO2_SOLID(INDIA)")
 c = kmean.cluster_centers_
 for s in range(2):
     xc,yc = c[s,:]
